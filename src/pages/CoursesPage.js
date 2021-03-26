@@ -1,10 +1,11 @@
 import { CoursesProvider } from '../providers/CoursesProvider';
+import CourseCard from '../ui/CourseCard';
 
 export default function CoursesPage() {
   return (
     <CoursesProvider>
-      {({ isLoading, courses }) => {
-        if (isLoading) {
+      {({ isLoadingCourses, courses, toggleFavourite, isToggling }) => {
+        if (isLoadingCourses) {
           return <p>Loading...</p>;
         }
 
@@ -12,13 +13,7 @@ export default function CoursesPage() {
           <ul>
             {courses.map((course, index) => (
               <li key={index}>
-                <img
-                  src={course.instructor_image_url}
-                  alt={`Headshot of ${course.instructor_name}`}
-                  data-test={`instructor-headshot-${course.id}`}
-                />
-                <p data-test={`course-instructor-${course.id}`}>{course.instructor_name}</p>
-                <p data-test={`course-title-${course.id}`}>{course.title}</p>
+                <CourseCard course={course} toggleFavourite={toggleFavourite} isToggling={isToggling} />
               </li>
             ))}
           </ul>
